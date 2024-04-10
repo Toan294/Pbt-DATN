@@ -14,7 +14,7 @@ const Blog = (props) => {
       <h4 className="text-uppercase text-primary">HỖ TRỢ MUA HÀNG</h4>
       <p>1 . Bảo Hành Cho Quý Khách .</p>
       <h6 className="fw-fw-bolder"> Liên hệ </h6>
-      <p>1 .Qúy khách liên hệ số điện thoại sau : 0978641896.</p>
+      <p>1 .Qúy khách liên hệ số điện thoại sau : 0337633628.</p>
     </div>
   );
 };

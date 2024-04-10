@@ -412,7 +412,7 @@ const Checkout = (props) => {
                   <p>Vui lòng ghi lại MÃ ĐƠN HÀNG và SỐ ĐIỆN THOẠI của bạn vào mục Nội dung thanh toán. Đơn hàng sẽ đươc giao sau khi tiền đã được chuyển.</p>
                   <p>Ví dụ: 01234 - 0987654321</p>
                   <p>Thông tin tài khoản:</p>
-                  <p>Nguyễn Thành Công - stk: 04136519801 - TPbank chi nhánh Hà Nội</p>
+                  <p>Phan Bá Toàn - stk: 0337633628 - Mbbank chi nhánh Hà Nội</p>
                 </div>
               )}
             </div>

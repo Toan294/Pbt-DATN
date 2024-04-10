@@ -20,25 +20,16 @@ const brands = [
     icon: "bx bx-category-alt",
   },
   {
-    display_name: "Loa, Tai Nghe, WebCam",
+    display_name: "LapTop",
     value: "4",
     icon: "bx bx-category-alt",
   },
   {
-    display_name: "Thiết Bị Mạng",
+    display_name: "Gaming Gear",
     value: "5",
     icon: "bx bx-category-alt",
   },
-  {
-    display_name: "Gaming Gear",
-    value: "6",
-    icon: "bx bx-category-alt",
-  },
-  {
-    display_name: "LAPTOP",
-    value: "7",
-    icon: "bx bx-category-alt",
-  },
+  
 ];
 
 const prices = [
@@ -57,31 +48,38 @@ const prices = [
     max: 2000000,
   },
   {
-    display_name: "2.000.000 - 3.000.000",
+    display_name: "2.000.000 - 5.000.000",
     value: "2",
     icon: "bx bx-category-alt",
     min: 2000000,
-    max: 3000000,
+    max: 5000000,
   },
   {
-    display_name: "3.000.000 - 4.000.000",
+    display_name: "5.000.000 - 10.000.000",
     value: "3",
     icon: "bx bx-category-alt",
-    min: 3000000,
-    max: 4000000,
+    min: 5000000,
+    max: 10000000,
   },
   {
-    display_name: "Trên 4 triệu",
+    display_name: "10.000.000 - 20.000.000",
     value: "4",
     icon: "bx bx-category-alt",
-    min: 4000000,
-    max: 10000000,
+    min: 10000000,
+    max: 20000000,
+  },
+  {
+    display_name: "Trên 20.000.000",
+    value: "5",
+    icon: "bx bx-category-alt",
+    min: 20000000,
+    max: 100000000,
   },
 ];
 
 const count = 6;
-const defaultBrand = [1, 2, 3, 4, 5, 6, 7];
-const defaultCategory = [1, 2, 3, 4, 5, 6, 7];
+const defaultBrand = [1, 2, 3, 4, 5];
+const defaultCategory = [1, 2, 3, 4, 5];
 
 const Product = (props) => {
   const [products, setProducts] = useState([]);
@@ -93,7 +91,7 @@ const Product = (props) => {
   const [brand1, setBrand1] = useState([]);
   const [price, setPrice] = useState([]);
   const [min, setMin] = useState(0);
-  const [max, setMax] = useState(10000000);
+  const [max, setMax] = useState(100000000);
 
   var rows = new Array(total).fill(0).map((zero, index) => (
     <li className={page === index + 1 ? "page-item active" : "page-item"} key={index}>

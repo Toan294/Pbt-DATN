@@ -10,7 +10,9 @@ const Footer = () => {
                 <hr className="light" />
                 <h5>Liên hệ và hỗ trợ</h5>
                 <p>Tư vấn mua hàng </p>
+                <p>- Hotline: 0337633628</p>
                 <p>Hỗ trợ kỹ thuật</p>
+                <p>- Hotline: 0337633628</p>
               </div>
               <div className="col-md-4">
                 <hr className="light" />
@@ -23,11 +25,13 @@ const Footer = () => {
                 <h5>Hệ thống cửa hàng</h5>
                 <hr className="light" />
                 <p>Chính sách đổi trả</p>
+                <p>- Bảo hành lỗi 1 đổi 1 do nhà sản xuất</p>
                 <p>Chính sách trả góp</p>
+                <p>- Trả góp 0%</p>
               </div>
               <div className="col-12">
-                <hr className="light-100" />
-                <h5>© 2023 Máy tính & Phụ kiện </h5>
+                <hr className="light-100" />T
+                <h5>© 2024 Máy tính & Phụ kiện </h5>
               </div>
             </div>
           </div>

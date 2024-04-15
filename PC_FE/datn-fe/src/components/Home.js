@@ -1,8 +1,8 @@
 import { NavLink } from "react-router-dom";
-import first from "../static/images/Slide1.2.png";
-import second from "../static/images/Slide1.2.png";
-import third from "../static/images/Slide1.3.png";
-import fourth from "../static/images/Slide1.4.png";
+import first from "../static/images/slide1.1.jpg";
+import second from "../static/images/slide1.2.png";
+import third from "../static/images/slide1.3.jpg";
+import fourth from "../static/images/slide1.4.jpg";
 import React, { useState, useEffect } from "react";
 import { getAllProducts } from "../api/ProductApi";
 import Product from "./Product";

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getAllProvince } from "../api/ProvinceApi";
+import { getAllProvince ,getAllDistrict,getAllWard} from "../api/ProvinceApi";
 import { getCartItemByAccountId } from "../api/CartApi";
 import { useForm } from "react-hook-form";
 import { createOrder } from "../api/OrderApi";
@@ -13,9 +13,12 @@ import Modal from "react-bootstrap/Modal";
 const Checkout = (props) => {
   const [amount, setAmount] = useState();
   const [cart, setCart] = useState([]);
-  const [info, setInfo] = useState();
-  const [district, setDistrict] = useState();
-  const [ward, setWard] = useState();
+  const [listProvince,setListProvince] = useState(null)
+  const [listDistrict,setListDistrict] = useState(null)
+  const [listWard,setListWard] = useState(null)
+  const [province, setProvince] = useState(null);
+  const [district, setDistrict] = useState(null);
+  const [ward, setWard] = useState(null);
   const [voucher, setVoucher] = useState("");
   const [flag, setFlag] = useState(false);
   const [sub, setSub] = useState();
@@ -48,7 +51,7 @@ const Checkout = (props) => {
     setText(value);
   };
   const onLoad = () => {
-    getAllProvince().then((resp) => setInfo(resp.data));
+    getAllProvince().then((resp) => setListProvince(resp.data));
     if (props.user) {
       getCartItemByAccountId(props.user.id).then((resp) => {
         setCart(resp.data.filter((item) => props.buy.includes(item.id + "")));
@@ -100,15 +103,40 @@ const Checkout = (props) => {
     setSub("");
     onLoad();
   };
-  const onLoadDistrictHandler = (id) => {
-    const resp = info.filter((item) => item.name === id);
-    setDistrict(resp[0].districts);
+  const onLoadProvinceHandler = (id) => {
+    setProvince(id)
   };
 
+  
+
+
   const onLoadWardHandler = (id) => {
-    const resp = district.filter((item) => item.name === id);
-    setWard(resp[0].wards);
+    setWard(id);
   };
+
+  const onLoadDistrictHandler = (id)=>{
+    setDistrict(id)
+  }
+
+  const onLoadListWard = () =>{
+    getAllWard(district).then((resp) => setListWard(resp.data));
+  }
+
+  const onLoadListDistrict = ()=>{
+    getAllDistrict(province).then((resp) => setListDistrict(resp.data));
+  }
+
+  useEffect(()=>{
+    if(province){
+      onLoadListDistrict(province)
+    }
+  },[province])
+
+  useEffect(()=>{
+    if(district){
+      onLoadListWard(district)
+    }
+  },[district])
 
   const onSubmitHandler = (data) => {
     if (voucher.length > 0) {
@@ -123,7 +151,7 @@ const Checkout = (props) => {
           const order = {
             fullname: data.name,
             phone: data.phone,
-            address: `${data.address}, ${data.ward}, ${data.district}, ${data.province}`,
+            address: `${data.address}, ${listWard.results.find(x => x.ward_id == data.ward)?.ward_name}, ${listDistrict.results.find(x => x.district_id == data.district)?.district_name}, ${listProvince.results.find(x => x.province_id == data.province)?.province_name}`,
             email: data.email,
             total: amount,
             note: data.note,
@@ -165,7 +193,7 @@ const Checkout = (props) => {
       const order = {
         fullname: data.name,
         phone: data.phone,
-        address: `${data.address}, ${data.ward}, ${data.district}, ${data.province}`,
+        address: `${data.address}, ${listWard.results.find(x => x.ward_id == data.ward)?.ward_name}, ${listDistrict.results.find(x => x.district_id == data.district)?.district_name}, ${listProvince.results.find(x => x.province_id == data.province)?.province_name}`,
         email: data.email,
         total: amount,
         note: data.note,
@@ -253,12 +281,12 @@ const Checkout = (props) => {
                 <label htmlFor="firstName" className="form-label">
                   <strong>Tỉnh Thành</strong>
                 </label>
-                <select className="form-control" {...register("province", { required: true })} required onChange={(e) => onLoadDistrictHandler(e.target.value)}>
+                <select className="form-control" {...register("province", { required: true })} required onChange={(e) => onLoadProvinceHandler(e.target.value)}>
                   <option selected disabled hidden></option>
-                  {info &&
-                    info.map((item, index) => (
-                      <option key={index} value={item.id}>
-                        {item.name}
+                  {listProvince &&
+                    listProvince.results.map((item, index) => (
+                      <option key={index} value={item.province_id}>
+                        {item.province_name}
                       </option>
                     ))}
                 </select>
@@ -267,12 +295,12 @@ const Checkout = (props) => {
                 <label htmlFor="lastName" className="form-label">
                   <strong>Quận Huyện</strong>
                 </label>
-                <select className="form-control" {...register("district", { required: true })} required onChange={(e) => onLoadWardHandler(e.target.value)}>
+                <select className="form-control" {...register("district", { required: true })} required onChange={(e) => onLoadDistrictHandler(e.target.value)}>
                   <option selected disabled hidden></option>
-                  {district &&
-                    district.map((item, index) => (
-                      <option key={index} value={item.id}>
-                        {item.name}
+                  {listDistrict &&
+                    listDistrict.results.map((item, index) => (
+                      <option key={index} value={item.district_id}>
+                        {item.district_name}
                       </option>
                     ))}
                 </select>
@@ -281,12 +309,12 @@ const Checkout = (props) => {
                 <label htmlFor="lastName" className="form-label">
                   <strong>Phường Xã</strong>
                 </label>
-                <select className="form-control" {...register("ward", { required: true })} required>
+                <select className="form-control" {...register("ward", { required: true })} required onChange={(e) => onLoadWardHandler(e.target.value)}>
                   <option selected disabled hidden></option>
-                  {ward &&
-                    ward.map((item, index) => (
-                      <option value={item.name} key={index}>
-                        {item.name}
+                  {listWard &&
+                    listWard.results.map((item, index) => (
+                      <option value={item.ward_id} key={index}>
+                        {item.ward_name}
                       </option>
                     ))}
                 </select>

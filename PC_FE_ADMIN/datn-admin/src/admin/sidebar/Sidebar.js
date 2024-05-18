@@ -39,13 +39,13 @@ const sidebar_items_1 = [
     modify: "/voucher-detail",
     icon: "bx bx-bar-chart-alt",
   },
-  {
+  /*{
     display_name: "Thương Hiệu",
     route: "/categories",
     add: "/add-category",
     modify: "/category-detail",
     icon: "bx bx-list-ol",
-  },
+  },*/
   {
     display_name: "Khuyến mãi",
     route: "/sale",

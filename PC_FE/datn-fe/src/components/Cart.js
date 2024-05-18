@@ -106,20 +106,27 @@ const Cart = (props) => {
   };
 
   const checkOutHandler = () => {
-    if (props.buy.length === 0) {
-      toast.warning("Bạn vẫn chưa chọn sản phẩm nào để mua.");
-    } else {
-      for (let j = 0; j < props.buy.length; j++) {
-        for (let i = 0; i < cart.length; i++) {
-          if (props.buy[j] == cart[i].id) {
-            isEnoughCartItem(cart[i].id, cart[i].quantity)
-              .then((resp) => console.log(resp.data))
-              .catch(() => history.push("/out-of-stock"));
+    const currentUser = localStorage.getItem("token");
+    if (currentUser || currentUser !== null) {
+      if (props.buy.length === 0) {
+        toast.warning("Bạn vẫn chưa chọn sản phẩm nào để mua.");
+      } else {
+        for (let j = 0; j < props.buy.length; j++) {
+          for (let i = 0; i < cart.length; i++) {
+            if (props.buy[j] == cart[i].id) {
+              isEnoughCartItem(cart[i].id, cart[i].quantity)
+                .then((resp) => console.log(resp.data))
+                .catch(() => history.push("/out-of-stock"));
+            }
           }
         }
+        history.push("/checkout");
       }
-      history.push("/checkout");
+    } else {
+      toast.warning("Hãy đăng nhập hoặc tạo tài khoản để mua!");
     }
+
+    
   };
 
   const buyHandler = (e) => {
@@ -153,7 +160,7 @@ const Cart = (props) => {
               <tr>
                 <th scope="col">Chọn</th>
                 <th scope="col">Ảnh</th>
-                <th scope="col">Tên</th>
+                <th scope="col" width="500px">Tên</th>
                 {/* <th scope="col">Thông số</th> */}
                 <th scope="col">Đơn giá</th>
                 <th scope="col">Số lượng</th>
@@ -205,7 +212,7 @@ const Cart = (props) => {
                       <h6 className="card-title mt-5 bolder">{(item.quantity * ((item.price * (100 - item.discount)) / 100)).toLocaleString()} đ</h6>
                     </td>
                     <td>
-                      <button className="border-0 pl-4" style={{ backgroundColor: "white" }} onClick={() => removeCartItemHandler(item.id, item.quantity)}>
+                      <button className="border-0 pl-4" style={{ backgroundColor: (240, 240, 240) }} onClick={() => removeCartItemHandler(item.id, item.quantity)}>
                         <i className="fa fa-trash-o mt-5 text-danger" style={{ fontSize: "24px" }} />
                       </button>
                     </td>

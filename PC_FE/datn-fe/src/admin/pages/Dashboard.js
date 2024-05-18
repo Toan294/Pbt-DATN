@@ -43,6 +43,11 @@ const topCustomers = {
   head: ["user", "total orders", "total spending"],
   body: [
     {
+      username: "Bá Toàn",
+      order: "490",
+      price: "$145,870",
+    },
+    {
       username: "Nghiêm Trường",
       order: "490",
       price: "$15,870",

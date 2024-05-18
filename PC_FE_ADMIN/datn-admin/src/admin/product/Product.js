@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
-import { getAllProductsByBrand } from "../../api/ProductApi";
+import { getAllProductsByBrandAdmin, updateStatusProduct } from "../../api/ProductApi";
 import { NavLink } from "react-router-dom";
 import { getBrands } from "../../api/BrandApi";
 
@@ -18,8 +18,9 @@ const Product = () => {
   }, [page]);
 
   const onLoad = () => {
-    getAllProductsByBrand(0, page, 5, true).then((response) => {
+    getAllProductsByBrandAdmin(0, page, 5).then((response) => {
       setProducts(response.data.content);
+      debugger
       setTotal(response.data.totalPages);
     });
 
@@ -27,6 +28,13 @@ const Product = () => {
       .then((resp) => setBrand(resp.data.content))
       .catch((error) => console.log(error));
   };
+
+  const updateStatusProductById = (id) => {
+    console.log(id);
+    updateStatusProduct(id).then((res) => {
+      onLoad();
+    })
+  }
 
   const onChangePage = (page) => {
     setPage(page);
@@ -44,7 +52,7 @@ const Product = () => {
     if (value == 0) {
       onLoad();
     } else {
-      getAllProductsByBrand(value, 1, 5, true)
+      getAllProductsByBrandAdmin(value, 1, 5)
         .then((resp) => {
           setProducts(resp.data.content);
           setTotal(resp.data.totalPages);
@@ -82,7 +90,7 @@ const Product = () => {
                     <th scope="col">#</th>
                     <th scope="col">Tên sản phẩm</th>
                     <th scope="col">Mã sản phẩm</th>
-                    {/* <th scope="col">Thương hiệu</th> */}
+                    <th scope="col">Thương hiệu</th>
                     <th scope="col">Hình ảnh</th>
                     <th scope="col">Trạng thái</th>
                     <th scope="col">Cập nhật</th>
@@ -105,6 +113,10 @@ const Product = () => {
                           <img className="img-fluid" style={{ width: "100px", height: "100px" }} src={require(`../../static/images/${item.image}`)} alt="" />
                         </th>
                         <th>{item.active ? "Đang bán" : "Dừng bán"}</th>
+                        <th>
+                        
+                          <button className="btn btn-warning" onClick={() => updateStatusProductById(item.id)}>{item.active === true ? "Lock" : "UnLock"}</button>
+                        </th>
                         <th>
                           <NavLink to={`/product-detail/${item.id}`} exact>
                             <i className="fa fa-pencil-square-o" aria-hidden="true"></i>

@@ -41,7 +41,7 @@ const Brand = () => {
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Tên Danh Mujc</th>
+            <th scope="col">Tên Danh Mục</th>
             <th scope="col">Mô tả</th>
             <th scope="col">Ngày tạo</th>
             <th scope="col">Trạng thái</th>
